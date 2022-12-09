@@ -12,10 +12,10 @@ public class AdminController {
         return "redaction";
     }
 
-    @GetMapping("/admin")
-    public String admin(Model model) {
-        return "admin";
-    }
+//    @GetMapping("/admin")
+//    public String admin(Model model) {
+//        return "admin";
+//    }
 
 
 }

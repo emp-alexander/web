@@ -36,6 +36,13 @@ public class MainController {
         return "add";
     }
 
+    @GetMapping("/admin")
+    public String admin(Model model) {
+        Iterable<Car> cars = carsRepository.findAll();
+        model.addAttribute("cars", cars);
+        return "admin";
+    }
+
     @PostMapping("/add")
     public String carPostAdd(@RequestParam String nameCar, @RequestParam String year, Model model){
         Car car = new Car(nameCar, year);
@@ -67,6 +74,24 @@ public class MainController {
         car.ifPresent(res::add);
         model.addAttribute("car", res);
         return "redaction";
+    }
+
+    @PostMapping("/admin/{id}/redaction")
+    public String carPostUpdate(@PathVariable(value = "id") long id, @RequestParam String nameCar, @RequestParam String year, Model model){
+        Car car = carsRepository.findById(id).orElseThrow();
+        car.setName(nameCar);
+        car.setYear(year);
+        carsRepository.save(car);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/admin/{id}/delete")
+    public String carPostDelete(@PathVariable(value = "id") long id, Model model){
+        Car car = carsRepository.findById(id).orElseThrow();
+        carsRepository.delete(car);
+
+        return "redirect:/";
     }
 
 

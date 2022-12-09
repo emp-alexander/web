@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
   <title>Администратор</title>
   <meta charset="utf-8">
@@ -131,15 +131,18 @@
         <div class="col">
           <div class="card shadow-sm">
             <img src="https://www.komek.ru/upload/iblock/bf0/teleskopicheskiy-pogruzchik-povyshennoy-gruzopodemnosti-manitou-mht-x-860_1.jpg" alt="...">
-            <div class="card-body">
-              <p class="card-text">Камаз ДПС</p>
+            <div th:each="el : ${cars}" class="card-body">
+              <p class="card-text" th:text="${el.getName()}"/>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Удалить</button>
-                  <a th:href="'/redaction' + "><button type="button" class="btn btn-sm btn-outline-secondary">Изменить</button></a>
+                  <form>
+                    <a th:href="'/admin/' + ${el.getIdcar} + '/redaction'"><button type="button" class="btn btn-sm btn-outline-secondary">Изменить</button></a>
+                    </a>
+                  </form>
+                  <form th:action="'/admin/' +${el.getIdcar} +  '/delete'" method="post">
+                    <button class="btn btn-warning" type="submit">Удалить</button>
+                  </form>
                 </div>
-              </div>
-            </div>
           </div>
         </div>
         <div class="col">
@@ -173,7 +176,8 @@
       </div>
     </div>
   </div>
-
+    </div>
+  </div>
 </main>
 
 <div class="container">
